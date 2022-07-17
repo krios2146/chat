@@ -1,4 +1,4 @@
-package com.krios.chat;
+package com.krios.chat.message;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,5 +1,6 @@
 package com.krios.chat;
 
+import com.krios.chat.message.Message;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
