@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  SESSINO_KEY = 'auth_user';
+  SESSION_KEY: string = 'auth_user';
 
   username!: string;
   password!: string;
@@ -15,14 +16,14 @@ export class AuthenticationService {
   constructor(private http: HttpClient) { }
 
   authenticate(username: string, password: string): Observable<void> {
-    return this.http.get('http://localhost:8080/login', {
+    return this.http.get(`${environment.apiBaseUrl}/login`, {
       headers: { authorization: this.createBasicAuthToken(username, password) }
     })
-    .pipe(map((res) => {
-      this.username = username;
-      this.password = password;
-      this.registerInSession(username);
-    }));
+      .pipe(map((res) => {
+        this.username = username;
+        this.password = password;
+        this.registerInSession(username);
+      }));
   }
 
   createBasicAuthToken(username: string, password: string): string {
@@ -30,17 +31,17 @@ export class AuthenticationService {
   }
 
   registerInSession(username: string): void {
-    sessionStorage.setItem(this.SESSINO_KEY, username);
+    sessionStorage.setItem(this.SESSION_KEY, username);
   }
 
   logout(): void {
-    sessionStorage.removeItem(this.SESSINO_KEY);
+    sessionStorage.removeItem(this.SESSION_KEY);
     this.username = null!;
     this.password = null!;
   }
 
   isUserLoggedIn(): boolean {
-    let user = sessionStorage.getItem(this.SESSINO_KEY);
+    let user = sessionStorage.getItem(this.SESSION_KEY);
     if (user === null) {
       return false;
     }
@@ -48,7 +49,7 @@ export class AuthenticationService {
   }
 
   getLoggedInUser(): string {
-    let user = sessionStorage.getItem(this.SESSINO_KEY);
+    let user = sessionStorage.getItem(this.SESSION_KEY);
     if (user === null) {
       return '';
     }

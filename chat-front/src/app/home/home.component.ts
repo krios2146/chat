@@ -11,8 +11,7 @@ import { AuthenticationService } from '../authentication.service';
 export class HomeComponent implements OnInit {
 
   isLoggedIn: boolean = false;
-  loggedInUser: string = '';
-
+  loggedInUser!: string;
 
   constructor(private route: ActivatedRoute, private router: Router, 
     private http: HttpClient, private authService: AuthenticationService) { }
