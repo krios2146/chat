@@ -7,12 +7,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AppUserService implements UserDetailsService {
 
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public List<AppUser> getAll() {
+        return appUserRepository.findAll();
+    }
 
     public AppUser saveUser(AppUser user) {
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
