@@ -25,6 +25,7 @@ public class AppUser implements UserDetails {
     private String password;
     private String firstName;
     private String lastName;
+    @Enumerated(EnumType.STRING)
     private AppUserRole role;
 
     public AppUser(String username, String email, String password, String firstName, String lastName, AppUserRole role) {
