@@ -19,7 +19,7 @@ public class ChatApplication {
 	@Bean
 	CommandLineRunner runner(AppUserService appUserService) {
 		return args -> {
-			appUserService.saveUser(new AppUser("username", "email", "password", "John", "Smith", AppUserRole.USER));
+			appUserService.registerUser(new AppUser("username", "email", "password", "John", "Smith", AppUserRole.USER));
 		};
 	}
 }

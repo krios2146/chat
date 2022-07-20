@@ -1,5 +1,6 @@
 package com.krios.chat.appuser;
 
+import com.krios.chat.exception.EmailAlreadyTakenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,9 +21,16 @@ public class AppUserService implements UserDetailsService {
         return appUserRepository.findAll();
     }
 
-    public AppUser saveUser(AppUser user) {
+    public AppUser registerUser(AppUser user) {
+        boolean userExists = appUserRepository.findByEmail(user.getEmail()).isPresent();
+
+        if (userExists) {
+            throw new EmailAlreadyTakenException("Email: " + user.getEmail() + " already taken");
+        }
+
         String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
+
         return appUserRepository.save(user);
     }
 
