@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication.service';
 
 @Component({
@@ -14,13 +14,13 @@ export class LoginComponent implements OnInit {
   isLoggedIn: boolean = false;
   error!: string;
 
-  constructor(private route: ActivatedRoute, private router: Router, private authService: AuthenticationService) { }
+  constructor(private router: Router, private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isUserLoggedIn();
 
     if (this.isLoggedIn) {
-      this.router.navigateByUrl('home');
+      this.router.navigateByUrl('');
     }
   }
 

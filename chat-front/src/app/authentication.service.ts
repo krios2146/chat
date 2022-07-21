@@ -19,7 +19,7 @@ export class AuthenticationService {
     return this.http.get(`${environment.apiBaseUrl}/login`, {
       headers: { authorization: this.createBasicAuthToken(username, password) }
     })
-      .pipe(map((res) => {
+      .pipe(map(() => {
         this.username = username;
         this.password = password;
         this.registerInSession(username);
