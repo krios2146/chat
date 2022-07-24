@@ -17,7 +17,7 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public List<AppUser> getAll() {
+    public List<AppUser> getUsers() {
         return appUserRepository.findAll();
     }
 
