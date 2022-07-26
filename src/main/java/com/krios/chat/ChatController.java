@@ -13,8 +13,8 @@ public class ChatController {
 
     @MessageMapping("/chat/sendMessage")
     @SendTo("/topic/public")
-    public Message sendMessage(@Payload Message message) {
-        return message;
+    public Message sendMessage(@Payload String message) {
+        return new Message(message);
     }
 
 }

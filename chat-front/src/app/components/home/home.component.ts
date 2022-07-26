@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   isLoggedIn: boolean = false;
   loggedInUser!: string;
   messages: Message[] = [];
+  subMsg!: string;
 
   constructor(private router: Router, 
     private authService: AuthenticationService, 
@@ -31,15 +32,24 @@ export class HomeComponent implements OnInit {
     this.loggedInUser = this.authService.getLoggedInUser();
 
     this.messageService.getAllMessages().subscribe((m) => this.messages = m);
-    console.log('messages array', this.messages);
   }
 
   logout(): void {
     this.authService.logout();
   }
 
-  onSendMessage(message: string) {
-
+  onSendMessage(messageText: string) {
+    this.rxStompService.publish({
+      destination: "/app/chat/sendMessage",
+      body: messageText
+    });
   }
 
+  getSub() {
+    this.rxStompService.watch("/topic/public").subscribe((msg) => {
+      this.subMsg = msg.body;
+      console.log(msg.body);
+    });
+
+  }
 }
