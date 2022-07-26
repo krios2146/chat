@@ -18,7 +18,7 @@ public class WebSecurityConfig {
                 .antMatchers("/registration/**")
                 .permitAll()
             .anyRequest()
-                .permitAll().and()
+                .permitAll().and().cors().disable()
             .formLogin()
                 .loginPage("/login")
                 .permitAll();

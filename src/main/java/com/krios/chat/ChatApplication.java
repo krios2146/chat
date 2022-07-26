@@ -34,6 +34,7 @@ public class ChatApplication {
 					)
 			);
 			messageService.saveMessage(new Message("Test Message"));
+			messageService.saveMessage(new Message("Test Message 2"));
 			chatRoomService.saveChatRoom(new ChatRoom());
 		};
 	}

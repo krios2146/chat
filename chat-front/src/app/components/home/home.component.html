@@ -9,7 +9,7 @@
                         <button class="btn btn-info pull-right" type="button" (click)="onSendMessage(message.value)">Post</button>
                         <div class="clearfix"></div>
                         <ul class="media-list">
-                            <li class="media">
+                            <li class="media" *ngFor="let message of messages">
                                 <a href="#" class="pull-left">
                                     <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
                                 </a>
@@ -18,39 +18,7 @@
                                         <small class="text-muted">30 min ago</small>
                                     </span>
                                     <strong class="text-success">@MartinoMont</strong>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                        Lorem ipsum dolor sit amet, <a href="#">#consecteturadipiscing </a>.
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <a href="#" class="pull-left">
-                                    <img src="https://bootdey.com/img/Content/user_2.jpg" alt="" class="img-circle">
-                                </a>
-                                <div class="media-body">
-                                    <span class="text-muted pull-right">
-                                        <small class="text-muted">30 min ago</small>
-                                    </span>
-                                    <strong class="text-success">@LaurenceCorreil</strong>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                        Lorem ipsum dolor <a href="#">#ipsumdolor </a>adipiscing elit.
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="media">
-                                <a href="#" class="pull-left">
-                                    <img src="https://bootdey.com/img/Content/user_3.jpg" alt="" class="img-circle">
-                                </a>
-                                <div class="media-body">
-                                    <span class="text-muted pull-right">
-                                        <small class="text-muted">30 min ago</small>
-                                    </span>
-                                    <strong class="text-success">@JohnNida</strong>
-                                    <p>
-                                        Lorem ipsum dolor <a href="#">#sitamet</a> sit amet, consectetur adipiscing elit.
-                                    </p>
+                                    <p>text:{{message.text}}</p>
                                 </div>
                             </li>
                         </ul>
