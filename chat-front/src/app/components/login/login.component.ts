@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 
@@ -9,10 +10,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 export class LoginComponent implements OnInit {
 
-  username!: string;
-  password!: string;
-  isLoggedIn: boolean = false;
-  error!: string;
+  private isLoggedIn: boolean = false;
 
   constructor(private router: Router, private authService: AuthenticationService) { }
 
@@ -24,19 +22,15 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  login(): void {
+  login(username: string, password: string): void {
 
-    if (this.username === '' && this.username === null && this.password === '' && this.password === null) {
-      this.error = 'Invalid credentials';
-      return;
+    if (username === '' || username === undefined || password === '' || password === undefined) {
+      console.log('Invalid credentials');
     }
 
-    this.authService.authenticate(this.username, this.password).subscribe((result) => {
-      console.log(result);
-      this.router.navigateByUrl('');
-    }), () => {
-      this.error = 'Invalid credentials';
-    }
+    this.authService.authenticate(username, password);
+
+    console.log("Request sended");
   }
   
 }

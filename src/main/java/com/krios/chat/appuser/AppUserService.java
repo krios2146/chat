@@ -17,6 +17,12 @@ public class AppUserService implements UserDetailsService {
     private final AppUserRepository appUserRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return appUserRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User: " + username + " not found"));
+    }
+
     public List<AppUser> getUsers() {
         return appUserRepository.findAll();
     }
@@ -32,11 +38,5 @@ public class AppUserService implements UserDetailsService {
         user.setPassword(encodedPassword);
 
         return appUserRepository.save(user);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return appUserRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User: " + username + " not found"));
     }
 }

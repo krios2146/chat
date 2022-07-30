@@ -29,8 +29,6 @@ export class HomeComponent implements OnInit {
       this.router.navigateByUrl('login');
     }
 
-    this.loggedInUser = this.authService.getLoggedInUser();
-
     this.messageService.getAllMessages().subscribe((m) => this.messages = m);
   }
 
