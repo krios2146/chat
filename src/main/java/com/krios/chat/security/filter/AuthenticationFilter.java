@@ -39,8 +39,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         AppUser user = (AppUser) authentication.getPrincipal();
 
-        String accessToken = TokenBuilder.buildAccessToken(user, request);
-        String refreshToken = TokenBuilder.buildRefreshToken(user, request);
+        String accessToken = TokenBuilder.buildAccessToken(user);
+        String refreshToken = TokenBuilder.buildRefreshToken(user);
 
         Map<String, String> tokens = new HashMap<>();
         tokens.put("access_token", accessToken);

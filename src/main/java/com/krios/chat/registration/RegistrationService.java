@@ -1,12 +1,14 @@
 package com.krios.chat.registration;
 
 import com.krios.chat.appuser.AppUser;
-import com.krios.chat.appuser.AppUserRole;
 import com.krios.chat.appuser.AppUserService;
+import com.krios.chat.appuser.role.Role;
+import com.krios.chat.appuser.role.RoleEnum;
 import com.krios.chat.exception.InvalidEmailException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 @Service
@@ -29,7 +31,7 @@ public class RegistrationService {
                         request.getPassword(),
                         request.getFirstName(),
                         request.getLastName(),
-                        AppUserRole.USER
+                        List.of(new Role(RoleEnum.ROLE_USER))
                 )
         );
     }

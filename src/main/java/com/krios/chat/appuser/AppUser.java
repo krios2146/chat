@@ -1,8 +1,12 @@
 package com.krios.chat.appuser;
 
+import com.krios.chat.appuser.role.Role;
+import com.krios.chat.appuser.role.RoleEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,10 +14,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.hibernate.annotations.CascadeType.*;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 public class AppUser implements UserDetails {
     @SequenceGenerator(name = "appUser_sequence", sequenceName = "appUser_sequence", allocationSize = 1)
@@ -25,10 +34,15 @@ public class AppUser implements UserDetails {
     private String password;
     private String firstName;
     private String lastName;
-    @Enumerated(EnumType.STRING)
-    private AppUserRole role;
+    @ManyToMany
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @Cascade({SAVE_UPDATE, MERGE, PERSIST})
+    private List<Role> role;
 
-    public AppUser(String username, String email, String password, String firstName, String lastName, AppUserRole role) {
+    public AppUser(String username, String email, String password, String firstName, String lastName, List<Role> role) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -39,8 +53,9 @@ public class AppUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
-        return Collections.singletonList(authority);
+        List<SimpleGrantedAuthority> authority = role.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name())).toList();
+        return authority;
     }
 
     @Override

@@ -14,20 +14,18 @@ public class TokenBuilder {
     // TODO: Secure secret
     private static final Algorithm ALGORITHM = Algorithm.HMAC256("secret");
 
-    public static String buildAccessToken(AppUser user, HttpServletRequest request) {
+    public static String buildAccessToken(AppUser user) {
         return JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 5 * 60 * 1000)) // 5 min
-                .withIssuer(request.getRequestURI())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(ALGORITHM);
     }
 
-    public static String buildRefreshToken(AppUser user, HttpServletRequest request) {
+    public static String buildRefreshToken(AppUser user) {
         return JWT.create()
                 .withSubject(user.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) // 60 min
-                .withIssuer(request.getRequestURI())
                 .sign(ALGORITHM);
     }
 }
