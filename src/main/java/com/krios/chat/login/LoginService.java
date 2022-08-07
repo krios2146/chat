@@ -1,11 +1,14 @@
 package com.krios.chat.login;
 
+import com.krios.chat.appuser.AppUser;
+import com.krios.chat.appuser.AppUserService;
 import com.krios.chat.security.jwt.JWTUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -30,7 +33,8 @@ public class LoginService {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        String jwtAccessToken = JWTUtils.buildAccessToken(payload.get("username"));
-        return jwtAccessToken;
+        AppUser appUser = (AppUser) authentication.getPrincipal();
+
+        return JWTUtils.buildAccessToken(appUser);
     }
 }
