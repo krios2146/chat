@@ -10,9 +10,9 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 public class Role {
-    @SequenceGenerator(name = "app_user_role_sequence", sequenceName = "app_user_role_sequence", allocationSize = 1)
+    @SequenceGenerator(name = "role_sequence", sequenceName = "role_sequence", allocationSize = 1)
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "app_user_role_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_sequence")
     private Long id;
 
     @Enumerated(EnumType.STRING)
