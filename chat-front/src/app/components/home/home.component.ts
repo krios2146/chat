@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RxStompService } from 'src/app/_services/rx-stomp.service';
 import { MessageService } from 'src/app/_services/message.service';
-import { Message } from 'src/app/message';
+import { Message } from 'src/app/_models/message';
 
 @Component({
   selector: 'app-home',
