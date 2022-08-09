@@ -25,29 +25,33 @@ public class AuthenticationFilterJWT extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        String jwtToken = JWTUtils.getTokenFromRequest(request);
+        if (request.getServletPath().contains("login") || request.getServletPath().contains("registration")) {
+            filterChain.doFilter(request, response);
+        } else {
+            String jwtToken = JWTUtils.getTokenFromRequest(request);
 
-        try {
-            if (jwtToken == null || jwtToken.isEmpty()) {
-                throw new TokenNotPresentException("JWT token was not found in request");
+            try {
+                if (jwtToken == null || jwtToken.isEmpty()) {
+                    throw new TokenNotPresentException("JWT token was not found in request");
+                }
+
+                DecodedJWT decodedJWT = JWTUtils.decodeJwtToken(jwtToken);
+
+                String username = decodedJWT.getSubject();
+                UserDetails userDetails = appUserService.loadUserByUsername(username);
+
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities()
+                );
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            DecodedJWT decodedJWT = JWTUtils.decodeJwtToken(jwtToken);
-
-            String username = decodedJWT.getSubject();
-            UserDetails userDetails = appUserService.loadUserByUsername(username);
-
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    userDetails,
-                    null,
-                    userDetails.getAuthorities()
-            );
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            filterChain.doFilter(request, response);
         }
-
-        filterChain.doFilter(request, response);
     }
 }
