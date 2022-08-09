@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { RxStompService } from 'src/app/_services/rx-stomp.service';
-import { AuthenticationService } from 'src/app/_services/authentication.service';
 import { MessageService } from 'src/app/_services/message.service';
 import { Message } from 'src/app/message';
 
@@ -17,23 +15,10 @@ export class HomeComponent implements OnInit {
   messages: Message[] = [];
   subMsg!: string;
 
-  constructor(private router: Router, 
-    private authService: AuthenticationService, 
-    private rxStompService: RxStompService, 
-    private messageService: MessageService) { }
+  constructor(private rxStompService: RxStompService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.authService.isUserLoggedIn();
-
-    if (!this.isLoggedIn) {
-      this.router.navigateByUrl('login');
-    }
-
     this.messageService.getAllMessages().subscribe((m) => this.messages = m);
-  }
-
-  logout(): void {
-    this.authService.logout();
   }
 
   onSendMessage(messageText: string) {
