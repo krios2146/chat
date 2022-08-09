@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-import { RxStompService } from './services/rx-stomp.service';
+import { RxStompService } from './_services/rx-stomp.service';
 import { rxStompServiceFactory } from './rx-stomp-service-factory';
 
 @NgModule({

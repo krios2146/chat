@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RxStompService } from 'src/app/services/rx-stomp.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { MessageService } from 'src/app/services/message.service';
+import { RxStompService } from 'src/app/_services/rx-stomp.service';
+import { AuthenticationService } from 'src/app/_services/authentication.service';
+import { MessageService } from 'src/app/_services/message.service';
 import { Message } from 'src/app/message';
 
 @Component({

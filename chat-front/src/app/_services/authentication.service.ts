@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthenticationService {
 
-  private JSESSIONID: string = '';
   private formData: any = new FormData();
 
   constructor(private http: HttpClient) { }
