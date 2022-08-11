@@ -14,6 +14,6 @@ export class RegistrationComponent implements OnInit {
   ngOnInit(): void { }
 
   register(registerForm: NgForm): void {
-    this.registrationService.registerUser(registerForm.value)
+    this.registrationService.registerUser(registerForm.value).subscribe();
   }
 }

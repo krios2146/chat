@@ -37,7 +37,7 @@ public class RegistrationService {
                         payload.get("email"),
                         payload.get("password"),
                         payload.get("firstName"),
-                        payload.get("lastname"),
+                        payload.get("lastName"),
                         List.of(new Role(RoleEnum.ROLE_USER))
                 )
         );

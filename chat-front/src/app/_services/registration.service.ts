@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 
@@ -9,10 +9,17 @@ import { User } from '../_models/user';
 })
 export class RegistrationService {
 
-  constructor(private http: HttpClient, private router: Router) { }
+  private options = {headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')};
 
-  registerUser(user: User): void {
-    this.http.post<User>(`${environment.apiBaseUrl}/registration`, user);
-    this.router.navigateByUrl('');
+  constructor(private http: HttpClient) { }
+
+  registerUser(user: User): Observable<any> {
+    const payload = new HttpParams()
+    .set("username", user.username)
+    .set("password", user.password)
+    .set("firstName", user.firstName)
+    .set("lastName", user.lastName)
+    .set("email", user.email);
+    return this.http.post<User>(`${environment.apiBaseUrl}/registration`, payload, this.options);
   }
 }
