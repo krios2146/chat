@@ -24,6 +24,7 @@ public class WebSecurityConfig {
         http.csrf().disable();
 
         http.authorizeRequests().antMatchers("/api/login").permitAll();
+        http.authorizeRequests().antMatchers("/api/registration").permitAll();
         http.authorizeRequests().anyRequest().authenticated();
 
         http.sessionManagement().sessionCreationPolicy(STATELESS);
